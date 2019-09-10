@@ -1,5 +1,5 @@
 import bisect 
-import statistics as st
+
 
 
 
@@ -105,8 +105,34 @@ class Grafo(object):
         avg = 0
         for vertice in self.v_list:
             avg += vertice.grau
-        return avg/len(self.v_list)  
+        return avg/len(self.v_list)    
+    
+    
         
+
+    def adj_matrix(self):
+        edge_u = list()
+        edge_v = list()
+
+        for aresta in self.a_list:
+            edge_u.append(aresta.vertice_pai.id)
+            edge_v.append(aresta.vertice_mae.id)
+        
+        n = len(self.v_list)
+        
+        #inicializando matriz com zero
+        adjMatrix = [[0 for i in range(n)] for k in range(n)]
+        
+        for i in range(len(edge_u)):
+            u = edge_u[i]
+            v = edge_v[i]
+            adjMatrix[u][v] = 1
+
+        for i in range(len(adjMatrix)):
+          for k in range(len(adjMatrix[0])):
+             print(adjMatrix[i][k], " ", end='')
+          print('')
+
 V0 = Vertice("V0")
 V1 = Vertice("V1")
 V2 = Vertice("V2")
@@ -138,6 +164,3 @@ G.add_aresta(A3)
 G.add_aresta(A4)
 G.add_aresta(A5)
 G.add_aresta(A6)
-
-
-
