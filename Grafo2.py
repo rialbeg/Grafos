@@ -33,6 +33,8 @@ class Aresta(object):
         self.id = Aresta.identificacao
         Aresta.identificacao += 1
 
+       
+
 
     def __str__(self):
         return "Aresta %s || Entre os vertices %s e %s" % (
@@ -47,13 +49,22 @@ class Grafo(object):
         self.v_list = []
         self.a_list = []
         self.g_list = []
+        self.g_dict = {}
 
+    
+  
     def add_vertice(self, vertice_a):
         self.v_list.append(vertice_a)
         return "Vertice adicionado"
 
     def add_aresta(self, aresta_a):
         self.a_list.append(aresta_a) 
+
+        # if aresta_a.vertice_pai.grau in self.g_dict:
+        #   self.g_dict[aresta_a.vertice_pai.grau] += 1
+        # else:
+        #   self.g_dict[aresta_a.vertice_pai.grau] = 1
+        
 
         if (aresta_a.vertice_pai.grau) not in self.g_list:
           bisect.insort(self.g_list,aresta_a.vertice_pai.grau) 
@@ -111,13 +122,26 @@ class Grafo(object):
         
 
     def adj_matrix(self):
+        edge_list = []
         edge_u = list()
         edge_v = list()
 
-        for aresta in self.a_list:
-            edge_u.append(aresta.vertice_pai.id)
-            edge_v.append(aresta.vertice_mae.id)
+        for edge in self.a_list:
+          pair = tuple(
+            (edge.vertice_pai.id,edge.vertice_mae.id)
+          )
+          reverse = pair[::-1]
+          edge_list.append(pair)
+          edge_list.append(reverse)
+
+          
+
+        for pair in edge_list:
+            edge_u.append(pair[0])
+            edge_v.append(pair[1])
         
+        print(edge_u)
+        print(edge_v)
         n = len(self.v_list)
         
         #inicializando matriz com zero
@@ -164,3 +188,7 @@ G.add_aresta(A3)
 G.add_aresta(A4)
 G.add_aresta(A5)
 G.add_aresta(A6)
+
+G.show_v()
+G.show_a()
+
